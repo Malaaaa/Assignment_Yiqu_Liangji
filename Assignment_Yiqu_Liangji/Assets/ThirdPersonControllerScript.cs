@@ -12,6 +12,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
     private RaycastHit raycastHit;
 
     private Vector3 storedClickedPosition;
+    public Transform Enemy;
 
     private float turnSmooth = 25f;
 
@@ -20,8 +21,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
     // In combat statut
     public string PLAYER_STATUTS_INCOMBAT = "Combat";
 
-    // Not in combat statut
-    public string PLAYER_STATUTS_NORMAL = "Normal";
+    public string ATTACK_FUNCTION = "Attack";
 
     // Not in combat walking
     public string MOVING_FUNCTION_NORMAL_WALK = "Moving";
@@ -31,13 +31,15 @@ public class ThirdPersonControllerScript : MonoBehaviour
     // check the direction which player to destination
     public float DESTINATION_DIRECTION = 1f;
 
-    // check the direction which player to enemy
-    public float ENEMY_DIRECTION = 2F;
+    // check the distance which player to enemy
+    public float ENEMY_DISTANCE;
+    public float GURAD_DISTANCE = 5f;
 
     // Start is called before the first frame update
     void Start()
     {
         storedClickedPosition = Vector3.zero;
+        Enemy = GameObject.FindWithTag("Enemy").transform;
     }
 
     // Update is called once per frame
@@ -62,8 +64,13 @@ public class ThirdPersonControllerScript : MonoBehaviour
          *  2.if mouse clicked the ground and player has not move to the expectant position, 
          *      store the new position and player should move to the new position
          *  3.if player has moved to the expectant position, should remove the stored position and stop moving
-         */
-
+         */ 
+        ENEMY_DISTANCE = Vector3.Distance(Enemy.transform.position, transform.position);
+        if (ENEMY_DISTANCE < GURAD_DISTANCE){
+            animator.SetBool(PLAYER_STATUTS_INCOMBAT, true);
+        }else{
+            animator.SetBool(PLAYER_STATUTS_INCOMBAT, false);
+        }
         if (Input.GetMouseButton(0)) {
             
             // get current mouse screen position
@@ -100,7 +107,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
         // check player whether near the destination position less than 1f;
         if (isArrived2DestinationPositionByCustomDistance(DESTINATION_DIRECTION)) {
             RemoveDestinationPosition();
-        }
+        }  
     }
 
     /*
@@ -127,10 +134,10 @@ public class ThirdPersonControllerScript : MonoBehaviour
 
     // if push left shift, player should run
     private void RunOrWalk() {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+        if (Input.GetKey(KeyCode.LeftShift)&&(ENEMY_DISTANCE>GURAD_DISTANCE)) {
            animator.SetBool(MOVING_FUNCTION_RUNNING, true);
            speed = 5f;
-        } else if (Input.GetKeyUp(KeyCode.LeftShift)) {
+        } else{
            animator.SetBool(MOVING_FUNCTION_RUNNING, false);
            speed = 2f;
         }
@@ -171,5 +178,8 @@ public class ThirdPersonControllerScript : MonoBehaviour
     private void RemoveDestinationPosition() {
 
         storedClickedPosition = Vector3.zero;
+    }
+    private void Attack(){
+        
     }
 }
