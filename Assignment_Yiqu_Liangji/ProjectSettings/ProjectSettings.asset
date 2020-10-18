@@ -657,7 +657,13 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Analytics: 1
+    Build: 0
+    Collab: 1
+    Game Performance: 0
+    Purchasing: 0
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -670,10 +676,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: 7b04ab05-bd08-4398-8a7f-89a827b7965a
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: Assignment02
+  organizationId: unity_15703476199ma
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
