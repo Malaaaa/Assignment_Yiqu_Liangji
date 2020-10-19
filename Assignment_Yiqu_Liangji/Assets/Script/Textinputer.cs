@@ -5,17 +5,24 @@ using UnityEngine.UI;
 
 public class Textinputer : MonoBehaviour
 {
+    public static Textinputer Gettask;
     public GameObject Textbox;
     public Text thetext;
     public TextAsset textFile;
     public string[] textLines;
-    public int currentline;
+    public int currentline = 0;
     public int endline;
     public GameObject player;
     public GameObject NPC;
     public float SpeakDistance;
+    public bool task=false;
 
 
+
+    private void Awake()
+    {
+        Gettask = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -25,9 +32,10 @@ public class Textinputer : MonoBehaviour
     }
     void Update()
     {
+
         SpeakDistance = Vector3.Distance(NPC.transform.position, player.transform.position);  
         Debug.Log(SpeakDistance);   
-        if(SpeakDistance < 2f) {
+        if(SpeakDistance < 2f&&currentline<endline&&Input.GetMouseButtonDown(0)) {
             Debug.Log("come in");
             Textbox.SetActive(true);
             thetext.text = textLines[currentline];
@@ -37,8 +45,13 @@ public class Textinputer : MonoBehaviour
             }
             if(currentline>=endline)
             {
+                task=true;
                 Textbox.SetActive(false);
-            }
+            }           
+
         }
+    }
+    public bool gettask(){
+        return task;
     }
 }
