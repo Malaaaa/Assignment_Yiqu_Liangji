@@ -12,24 +12,33 @@ public class Textinputer : MonoBehaviour
     public int currentline;
     public int endline;
     public GameObject player;
+    public GameObject NPC;
+    public float SpeakDistance;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
         if(textFile!=null)
-        textLines=(textFile. text. Split('\n'));    
+        textLines=(textFile. text. Split('\n'));
+        Textbox.SetActive(false);
     }
     void Update()
     {
-        thetext.text = textLines[currentline];
-        if(Input.GetMouseButtonDown(0))
-        {
-            currentline +=1;
-        }
-        if(currentline>endline){
-            Textbox.SetActive(false);
+        SpeakDistance = Vector3.Distance(NPC.transform.position, player.transform.position);  
+        Debug.Log(SpeakDistance);   
+        if(SpeakDistance < 2f) {
+            Debug.Log("come in");
+            Textbox.SetActive(true);
+            thetext.text = textLines[currentline];
+            if(Input.GetMouseButtonDown(0))
+            {
+                currentline +=1;
+            }
+            if(currentline>=endline)
+            {
+                Textbox.SetActive(false);
+            }
         }
     }
 }
