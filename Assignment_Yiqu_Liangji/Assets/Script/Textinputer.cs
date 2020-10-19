@@ -21,19 +21,24 @@ public class Textinputer : MonoBehaviour
     {
         if(textFile!=null)
         textLines=(textFile. text. Split('\n'));
-        SpeakDistance = Vector3.Distance(NPC.transform.position,player.transform.position);   
+        Textbox.SetActive(false);
     }
     void Update()
     {
-        if(SpeakDistance<5f)
+        SpeakDistance = Vector3.Distance(NPC.transform.position, player.transform.position);  
+        Debug.Log(SpeakDistance);   
+        if(SpeakDistance < 2f) {
+            Debug.Log("come in");
             Textbox.SetActive(true);
             thetext.text = textLines[currentline];
             if(Input.GetMouseButtonDown(0))
             {
                 currentline +=1;
             }
-            if(currentline>endline){
+            if(currentline>=endline)
+            {
                 Textbox.SetActive(false);
             }
+        }
     }
 }

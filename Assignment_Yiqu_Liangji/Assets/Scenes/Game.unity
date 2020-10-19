@@ -4129,7 +4129,7 @@ MonoBehaviour:
   textFile: {fileID: 4900000, guid: fb3438204b3224344ac0f6e3cc3b34d1, type: 3}
   textLines: []
   currentline: 0
-  endline: 3
+  endline: 2
   player: {fileID: 1407839164}
   NPC: {fileID: 570692656}
   SpeakDistance: 0
@@ -4141,7 +4141,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 570692656}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -31.94, y: 0.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 621394693}
@@ -4783,7 +4783,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621394692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.66, y: 0.61, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 570692658}
@@ -5214,7 +5214,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.278e-41, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 1.269e-41, z: 0, w: -2.015625}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
