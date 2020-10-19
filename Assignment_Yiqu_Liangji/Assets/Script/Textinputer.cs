@@ -9,7 +9,7 @@ public class Textinputer : MonoBehaviour
     public Text thetext;
     public TextAsset textFile;
     public string[] textLines;
-    public int currentline;
+    public int currentline = 0;
     public int endline;
     public GameObject player;
     public GameObject NPC;
@@ -25,9 +25,10 @@ public class Textinputer : MonoBehaviour
     }
     void Update()
     {
+
         SpeakDistance = Vector3.Distance(NPC.transform.position, player.transform.position);  
         Debug.Log(SpeakDistance);   
-        if(SpeakDistance < 2f) {
+        if(SpeakDistance < 2f&&currentline<endline&&Input.GetMouseButtonDown(0)) {
             Debug.Log("come in");
             Textbox.SetActive(true);
             thetext.text = textLines[currentline];
@@ -38,7 +39,8 @@ public class Textinputer : MonoBehaviour
             if(currentline>=endline)
             {
                 Textbox.SetActive(false);
-            }
+            }           
+
         }
     }
 }
