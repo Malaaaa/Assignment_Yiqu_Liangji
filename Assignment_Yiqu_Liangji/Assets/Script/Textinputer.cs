@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Textinputer : MonoBehaviour
 {
+    public static Textinputer Gettask;
     public GameObject Textbox;
     public Text thetext;
     public TextAsset textFile;
@@ -14,8 +15,14 @@ public class Textinputer : MonoBehaviour
     public GameObject player;
     public GameObject NPC;
     public float SpeakDistance;
+    public bool task=false;
 
 
+
+    private void Awake()
+    {
+        Gettask = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -38,9 +45,13 @@ public class Textinputer : MonoBehaviour
             }
             if(currentline>=endline)
             {
+                task=true;
                 Textbox.SetActive(false);
             }           
 
         }
+    }
+    public bool gettask(){
+        return task;
     }
 }
