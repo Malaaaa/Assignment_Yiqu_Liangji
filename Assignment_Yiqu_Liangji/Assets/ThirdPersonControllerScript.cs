@@ -15,6 +15,8 @@ public class ThirdPersonControllerScript : MonoBehaviour
 
     public Slider hpUI;
 
+    public GameObject FireBall;
+
     public float Maxhealth=100;
 
     public float Curhealth;
@@ -149,6 +151,13 @@ public class ThirdPersonControllerScript : MonoBehaviour
                         break;
                 }  
             }
+        } else if (Input.GetKeyDown(KeyCode.E)) {
+            // player push E to range attack
+            GameObject fireImg = (GameObject)Instantiate(FireBall);
+            Vector3 firePosition = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z + 1f);
+            fireImg.transform.position = firePosition;
+            fireImg.GetComponent<Rigidbody>().velocity = transform.forward * 20f;
+            fireImg.SetActive(true);
         } else {
             if (hasStoredPosition()) {
                 Moving2Destination();
