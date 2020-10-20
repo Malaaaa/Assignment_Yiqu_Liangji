@@ -15,8 +15,12 @@ public class PlayerBodyScript : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other) {
+    void onTriggerEnter(Collider collider) {
+        Debug.Log(collider.name);
 
-        
+        if (collider.name == "Goblin_rouge") {
+            Debug.Log("Attacked");
+            thirdPersonController.ChangeHealth(amount);
+        }
     }
 }

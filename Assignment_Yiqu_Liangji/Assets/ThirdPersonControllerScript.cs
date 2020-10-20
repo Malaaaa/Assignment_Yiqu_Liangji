@@ -66,6 +66,8 @@ public class ThirdPersonControllerScript : MonoBehaviour
     {
         storedClickedPosition = Vector3.zero;
         Enemy = GameObject.FindWithTag(ENEMY).transform;
+        Curhealth = Maxhealth;
+
     }
 
 
@@ -132,9 +134,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
                         *  If distance less than attack distance, just attack.
                         *  If distance large than attack distance, player should move nearly.
                         */
-                        Debug.Log(ENEMY_DISTANCE);
                         if (ENEMY_DISTANCE <= attackRange) {
-                            Debug.Log("attack enemy");
                             // attack function
                             // stop moving, look at enemy and attack
                             storedClickedPosition = Vector3.zero;
@@ -145,7 +145,6 @@ public class ThirdPersonControllerScript : MonoBehaviour
                             }
                             ChangeAnimatorStatus(ATTACK_FUNCTION, false);
                         } else {
-                            Debug.Log("moving to enemy");
                             Moving(new Vector3(raycastHit.point.x, 0f, raycastHit.point.z));
                         }
                         break;
@@ -183,16 +182,15 @@ public class ThirdPersonControllerScript : MonoBehaviour
             RemoveDestinationPosition();
         }
         ResetBodyPosition();
-        Curhealth = Maxhealth;
         hpUI.maxValue = Maxhealth;
         hpUI.value = Curhealth;
-        Debug.Log(Curhealth);
     }
 
     void onTriggerEnter(Collider collider) {
+        Debug.Log(collider);
 
         if (collider.name == "Goblin_rouge") {
-            Debug.Log("Attack");
+            Debug.Log("Attacked");
             ChangeHealth(10f);
         }
     }
