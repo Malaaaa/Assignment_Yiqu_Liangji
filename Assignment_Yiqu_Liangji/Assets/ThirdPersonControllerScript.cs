@@ -65,6 +65,8 @@ public class ThirdPersonControllerScript : MonoBehaviour
         storedClickedPosition = Vector3.zero;
         Enemy = GameObject.FindWithTag(ENEMY).transform;
         Curhealth = Maxhealth;
+        hpUI.maxValue = Maxhealth;
+        hpUI.value = Curhealth;
     }
 
 
@@ -301,7 +303,6 @@ public class ThirdPersonControllerScript : MonoBehaviour
     public void ChangeHealth(float amount) {
 
         Curhealth -= amount;
-        hpUI.maxValue = Maxhealth;
-        hpUI.value = Curhealth;
+
     }
 }
