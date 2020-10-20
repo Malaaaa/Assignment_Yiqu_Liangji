@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MiniMapScript : MonoBehaviour
 {
-
-
     public GameObject miniMap;
 
     // Start is called before the first frame update
@@ -17,8 +15,7 @@ public class MiniMapScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if (Input.GetKey(KeyCode.N)) {
+        if (Input.GetKeyDown(KeyCode.N)) {
             Debug.Log("input get");
             miniMap.SetActive(!CheckStatus());
         }
