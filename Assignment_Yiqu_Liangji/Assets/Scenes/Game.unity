@@ -3466,7 +3466,7 @@ RectTransform:
   m_Children:
   - {fileID: 9489843}
   m_Father: {fileID: 1407839167}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8002,6 +8002,11 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 95861659920858144, guid: 6b1964733acd8264b99323299f8c1e3b, type: 3}
   m_PrefabInstance: {fileID: 33757429}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1049438929 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400074, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
+  m_PrefabInstance: {fileID: 1881204556}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1052553268
 GameObject:
   m_ObjectHideFlags: 0
@@ -8492,7 +8497,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1081252359}
   - component: {fileID: 1081252361}
-  - component: {fileID: 1081252360}
   m_Layer: 0
   m_Name: MiniMapCamera
   m_TagString: Untagged
@@ -8514,14 +8518,6 @@ Transform:
   m_Father: {fileID: 826121861}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!81 &1081252360
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1081252358}
-  m_Enabled: 1
 --- !u!20 &1081252361
 Camera:
   m_ObjectHideFlags: 0
@@ -10199,8 +10195,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   animator: {fileID: 1047950688}
-  Enemy: {fileID: 0}
-  health: 0
+  Enemy: {fileID: 1049438929}
+  hpUI: {fileID: 9489844}
+  Maxhealth: 100
+  Curhealth: 0
+  amount: 0
   PLAYER_STATUTS_INCOMBAT: Combat
   ATTACK_FUNCTION: Attack
   MOVING_FUNCTION_NORMAL_WALK: Moving
@@ -10224,8 +10223,8 @@ Transform:
   m_LocalPosition: {x: -42.43, y: 0, z: 321.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 826121861}
   - {fileID: 401556432}
+  - {fileID: 826121861}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

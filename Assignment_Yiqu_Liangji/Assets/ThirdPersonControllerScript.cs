@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ThirdPersonControllerScript : MonoBehaviour
 {
@@ -14,9 +15,10 @@ public class ThirdPersonControllerScript : MonoBehaviour
 
     private Vector3 storedClickedPosition;
     public Transform Enemy;
-
-    public float health;
-
+    public Slider hpUI;
+    public float Maxhealth=100;
+    public float Curhealth;
+    public float amount;
     private float turnSmooth = 25f;
 
     private string GROUND = "Ground";
@@ -53,6 +55,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
     {
         storedClickedPosition = Vector3.zero;
         Enemy = GameObject.FindWithTag("Enemy").transform;
+        Curhealth = Maxhealth;
     }
 
     // Update is called once per frame
@@ -78,6 +81,9 @@ public class ThirdPersonControllerScript : MonoBehaviour
          *      store the new position and player should move to the new position
          *  3.if player has moved to the expectant position, should remove the stored position and stop moving
          */ 
+        Curhealth -=amount;
+        hpUI.maxValue = Maxhealth;
+        hpUI.value = Curhealth;
         ENEMY_DISTANCE = Vector3.Distance(Enemy.transform.position, transform.position);
         if (ENEMY_DISTANCE < GURAD_DISTANCE){
             animator.SetBool(PLAYER_STATUTS_INCOMBAT, true);
