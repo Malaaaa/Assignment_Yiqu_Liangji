@@ -29,8 +29,6 @@ public class ThirdPersonControllerScript : MonoBehaviour
 
     private float turnSmooth = 25f;
 
-    private string GROUND = "Ground";
-
     // In combat statut
     public string PLAYER_STATUTS_INCOMBAT = "Combat";
 

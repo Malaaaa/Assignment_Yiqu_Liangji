@@ -29,7 +29,6 @@ public class GobinManage : MonoBehaviour
     public int j;
     private void Start()
     {
-        Debug.Log("comeinstart");
         CurrentState = State.Idle;
         player = GameObject.FindWithTag("Player").transform;
         ani = GetComponent<Animator>();
@@ -41,7 +40,6 @@ public class GobinManage : MonoBehaviour
     private void Update()
     {
         distance = Vector3.Distance(player.transform.position, transform.position);
-        Debug.Log("comeinset");
         switch (CurrentState)
         {
             case State.Idle:
@@ -64,7 +62,6 @@ public class GobinManage : MonoBehaviour
     public void StateIdle()
     {
         agent.speed = speed;
-        Debug.Log("comein");
         ani.SetFloat("Speed", speed);
         time -= Time.deltaTime;
         if (time <= 0)
