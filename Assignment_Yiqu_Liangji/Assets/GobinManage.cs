@@ -7,6 +7,8 @@ using UnityEngine.AI;
 public class GobinManage : MonoBehaviour
 {
     public GameObject[] Target;
+    public GameObject StudentsID;
+    public GameObject Golbin;
     public enum State
     {
         Idle, Walk, Run, Attack, Damage, Dead,
@@ -38,6 +40,7 @@ public class GobinManage : MonoBehaviour
         AttackLock = false;
         hpUI.maxValue = Maxhealth;
         hpUI.value = Curhealth;
+        StudentsID.SetActive(false);
     }
 
     private void Update()
@@ -60,6 +63,17 @@ public class GobinManage : MonoBehaviour
             case State.Dead:
                 StateDead();
                 break;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.name=="sword"){
+            ChangeDamage();
+            ChangeHealth(5f);
+        }
+        if(other.name=="Ball"){
+            ChangeDamage();
+            ChangeHealth(8f);
         }
     }
     public void ChangeHealth(float amount) {
@@ -110,13 +124,11 @@ public class GobinManage : MonoBehaviour
         }
         async=StartCoroutine(StateChange());
         }
-        
     }
 
     private void StateDamage()
     {
         ani.SetTrigger("hit");
-        ChangeHealth(damage_value);
         agent.speed = 0;
     }
 
@@ -124,6 +136,8 @@ public class GobinManage : MonoBehaviour
     {
         agent.speed = 0;
         ani.SetBool("Dead", true);
+        Golbin.SetActive(false);
+        StudentsID.SetActive(true);
     }
     private void ChangeIdle()
     {
