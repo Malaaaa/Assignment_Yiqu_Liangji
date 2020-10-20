@@ -45,6 +45,7 @@ public class GobinManage : MonoBehaviour
 
     private void Update()
     {
+        StudentsID.transform.position = Golbin.transform.position;
         distance = Vector3.Distance(player.transform.position, transform.position);
         switch (CurrentState)
         {
