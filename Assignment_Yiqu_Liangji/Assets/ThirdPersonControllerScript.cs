@@ -288,7 +288,10 @@ public class ThirdPersonControllerScript : MonoBehaviour
      */
     private void ResetBodyPosition() {
         
-        animator.transform.position = transform.position;
+        float tempDistance = Vector3.Distance(transform.position, animator.transform.position);
+        if (tempDistance > 0.5f) {
+            animator.transform.position = transform.position;
+        }
     }
 
     private void ChangeAnimatorStatus(string animatorName, bool status) {
