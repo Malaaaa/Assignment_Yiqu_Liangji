@@ -15,6 +15,8 @@ public class ThirdPersonControllerScript : MonoBehaviour
     private Vector3 storedClickedPosition;
     public Transform Enemy;
 
+    public float health;
+
     private float turnSmooth = 25f;
 
     private string GROUND = "Ground";
