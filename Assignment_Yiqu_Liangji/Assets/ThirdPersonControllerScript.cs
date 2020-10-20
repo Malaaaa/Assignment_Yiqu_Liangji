@@ -11,14 +11,22 @@ public class ThirdPersonControllerScript : MonoBehaviour
 
     public Animator animator;
 
+    public Transform Enemy;
+
+    public Slider hpUI;
+
+    public float Maxhealth=100;
+
+    public float Curhealth;
+
+    public float attackRange = 2f;
+
+    public bool inCombat = false;
+
     private RaycastHit raycastHit;
 
     private Vector3 storedClickedPosition;
-    public Transform Enemy;
-    public Slider hpUI;
-    public float Maxhealth=100;
-    public float Curhealth;
-    public float amount;
+
     private float turnSmooth = 25f;
 
     private string GROUND = "Ground";
@@ -43,20 +51,25 @@ public class ThirdPersonControllerScript : MonoBehaviour
 
     public string MAIN_MENU = "MainMenu";
 
+    public string ENEMY = "Enemy";
+
     // check the direction which player to destination
     public float DESTINATION_DIRECTION = 1f;
 
     // check the distance which player to enemy
     public float ENEMY_DISTANCE;
+    
     public float GURAD_DISTANCE = 5f;
 
     // Start is called before the first frame update
     void Start()
     {
         storedClickedPosition = Vector3.zero;
-        Enemy = GameObject.FindWithTag("Enemy").transform;
+        Enemy = GameObject.FindWithTag(ENEMY).transform;
         Curhealth = Maxhealth;
     }
+
+
 
     // Update is called once per frame
     void FixedUpdate()
@@ -80,21 +93,21 @@ public class ThirdPersonControllerScript : MonoBehaviour
          *  2.if mouse clicked the ground and player has not move to the expectant position, 
          *      store the new position and player should move to the new position
          *  3.if player has moved to the expectant position, should remove the stored position and stop moving
+         *
+         *  Add combat function and health cal function
+         *  Only two conditions in ture, player should be in combat
+         *  1.the distance 
+         *  2.mouse clicked to enemy.
+         *  If player run away, the distance large than detection distance, player will be in normal status.
+         *  Players movement speed should large than enemy
          */ 
-        Curhealth -=amount;
-        hpUI.maxValue = Maxhealth;
-        hpUI.value = Curhealth;
+
         ENEMY_DISTANCE = Vector3.Distance(Enemy.transform.position, transform.position);
-        if (ENEMY_DISTANCE < GURAD_DISTANCE){
-            animator.SetBool(PLAYER_STATUTS_INCOMBAT, true);
-        }else{
-            animator.SetBool(PLAYER_STATUTS_INCOMBAT, false);
-        }
         if (Input.GetMouseButton(0) && !isClickedTheSpeaking()) {
             
             // get current mouse screen position
             Vector3 currentScreenPosition = Input.mousePosition;
-
+ 
             // declear a ray to screen position
             Ray groundCheckRay = Camera.main.ScreenPointToRay(currentScreenPosition);
 
@@ -102,31 +115,72 @@ public class ThirdPersonControllerScript : MonoBehaviour
             if (Physics.Raycast(groundCheckRay, out raycastHit)) {
                 GameObject currentBlockedObject = raycastHit.collider.gameObject;
                 // if mouse clicked to the ground, player should be move to this position
-                if (currentBlockedObject.tag == GROUND) {
-                    Vector3 mouseClickedPosition = raycastHit.point;
-                    StoreDestinationPosition(mouseClickedPosition);
-                    TakeSmoothRotation();
-                    Moving2Destination();
-                }
-                /*
-                 *  TODO
-                 *  if mouse clicked to the enemy, player should move to the enemy.
-                 *  if player near to the enemy less than 2f, player should not to move, player just could attack and defend
-                 *  when player near to enemy less than 2f, player should be in combat and change the animations
-                 */    
+                string blockedObjectTag = currentBlockedObject.tag;
+                switch (blockedObjectTag){
+                    case "Ground" :
+                        /*
+                        *  If player in combat, but he run away
+                        */
+                        if (inCombat) {
+                            animator.SetBool(ATTACK_FUNCTION, false);
+                        }
+                        Moving(raycastHit.point);
+                        break;
+
+                    case "Enemy" :
+                        /*
+                        *  mouse clicked to the enemy, should check the distance.
+                        *  If distance less than attack distance, just attack.
+                        *  If distance large than attack distance, player should move nearly.
+                        */
+                        if (ENEMY_DISTANCE <= attackRange) {
+                            // attack function
+                            // stop moving, look at enemy and attack
+                            storedClickedPosition = Vector3.zero;
+                            transform.LookAt(new Vector3(currentBlockedObject.transform.position.x, 0f, currentBlockedObject.transform.position.z));
+                            ChangeAnimatorStatus(ATTACK_FUNCTION, true);
+                            if (!inCombat) {
+                                inCombat = true;
+                            }
+                            ChangeAnimatorStatus(ATTACK_FUNCTION, false);
+                        } else {
+                            Moving(new Vector3(raycastHit.point.x, 0f, raycastHit.point.z));
+                        }
+                        break;
+                }  
             }
         } else {
             if (hasStoredPosition()) {
                 Moving2Destination();
-            } else {
-                animator.SetBool(MOVING_FUNCTION_NORMAL_WALK, false);
+            } else if (inCombat) {
+                ChangeAnimatorStatus(ATTACK_FUNCTION, true);
+            }else {
+                ChangeAnimatorStatus(MOVING_FUNCTION_NORMAL_WALK, false);
             }
+        }
+        /*
+         * Check the detective distance
+         * if player in combat but far away from enemy, 
+         * change player status
+         */
+        if (ENEMY_DISTANCE > GURAD_DISTANCE && inCombat) {
+            ChangeAnimatorStatus(PLAYER_STATUTS_INCOMBAT, false);
+            ChangeAnimatorStatus(MOVING_FUNCTION_NORMAL_WALK, true);
+            inCombat = false;
         }
         RunOrWalk();
         // check player whether near the destination position less than 1f;
         if (isArrived2DestinationPositionByCustomDistance(DESTINATION_DIRECTION)) {
             RemoveDestinationPosition();
-        }  
+        }
+        ResetBodyPosition();
+    }
+
+    private void Moving(Vector3 destinationPosition) {
+
+        StoreDestinationPosition(destinationPosition);
+        TakeSmoothRotation();
+        Moving2Destination();
     }
 
     /*
@@ -155,11 +209,11 @@ public class ThirdPersonControllerScript : MonoBehaviour
 
     // if push left shift, player should run
     private void RunOrWalk() {
-        if (Input.GetKey(KeyCode.LeftShift)&&(ENEMY_DISTANCE>GURAD_DISTANCE)) {
-           animator.SetBool(MOVING_FUNCTION_RUNNING, true);
+        if (Input.GetKey(KeyCode.LeftShift) && !inCombat) {
+           ChangeAnimatorStatus(MOVING_FUNCTION_RUNNING, true);
            speed = 5f;
         } else{
-           animator.SetBool(MOVING_FUNCTION_RUNNING, false);
+           ChangeAnimatorStatus(MOVING_FUNCTION_RUNNING, false);
            speed = 2f;
         }
     }
@@ -169,7 +223,10 @@ public class ThirdPersonControllerScript : MonoBehaviour
 
         // transform.LookAt(storedClickedPosition);
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        animator.SetBool(MOVING_FUNCTION_NORMAL_WALK, true);
+        ChangeAnimatorStatus(MOVING_FUNCTION_NORMAL_WALK, true);
+        if (inCombat) {
+            ChangeAnimatorStatus(PLAYER_STATUTS_INCOMBAT, true);
+        }
     }
 
     
@@ -182,6 +239,9 @@ public class ThirdPersonControllerScript : MonoBehaviour
         //     return true;
         // }
         // this is new function to check, use distance to check the position
+        if (storedClickedPosition == Vector3.zero) {
+            return true;
+        }
         float destinationDistance = Vector3.Distance(transform.position, storedClickedPosition);
         if (destinationDistance < customDistance) {
             return true;
@@ -217,5 +277,33 @@ public class ThirdPersonControllerScript : MonoBehaviour
             }
         }
         return false;
+    }
+
+    /*
+     *  Yiqu Zhang:
+     *  This function will fix the PlayerBody Position
+     *  Because when PlayerBody was be blocked, 
+     *  current transform will be continue move to destination position.
+     *  It means "Axis deflection": PlayerBody do not have same position with transform
+     */
+    private void ResetBodyPosition() {
+        
+        animator.transform.position = transform.position;
+    }
+
+    private void ChangeAnimatorStatus(string animatorName, bool status) {
+
+        animator.SetBool(animatorName, status);
+    }
+
+    /*
+     *  Player is attacked by enemy,
+     *  Per attack, lose amount health
+     */
+    public void ChangeHealth(float amount) {
+
+        Curhealth -= amount;
+        hpUI.maxValue = Maxhealth;
+        hpUI.value = Curhealth;
     }
 }
