@@ -11,6 +11,7 @@ public class GobinManage : MonoBehaviour
     {
         Idle, Walk, Run, Attack, Damage, Dead,
     }
+    private Coroutine async;
     public State CurrentState;
     public Transform player;
     public float distance;
@@ -20,12 +21,12 @@ public class GobinManage : MonoBehaviour
     private int i = 0;
     private float speed = 2.0f;
     private float time = 5.0f;
-    private float CD = 20f;
-    private Coroutine async;
+    private float CD = 2f;
     public Slider hpUI;
     public float Maxhealth = 100;
     public float Curhealth;
     public float amount;
+    public float damage_value;
     public int j;
     private void Start()
     {
@@ -35,6 +36,8 @@ public class GobinManage : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         Curhealth = Maxhealth;
         AttackLock = false;
+        hpUI.maxValue = Maxhealth;
+        hpUI.value = Curhealth;
     }
 
     private void Update()
@@ -59,6 +62,10 @@ public class GobinManage : MonoBehaviour
                 break;
         }
     }
+    public void ChangeHealth(float amount) {
+
+        Curhealth -= amount;
+    }
     public void StateIdle()
     {
         agent.speed = speed;
@@ -66,7 +73,7 @@ public class GobinManage : MonoBehaviour
         time -= Time.deltaTime;
         if (time <= 0)
         {
-            time = 20.0f;
+            time = 5.0f;
             i = Random.Range(0, Target.Length);
         }
         agent.SetDestination(Target[i].transform.position);
@@ -87,11 +94,12 @@ public class GobinManage : MonoBehaviour
         }
     }
 
-    public virtual void StateAttack()
+    public void StateAttack()
     {
-        if (AttackLock == false)
-        j = Random.Range(0, 2);
+        if (AttackLock == false){
+            j = Random.Range(0, 2);
         AttackLock = true;
+        Debug.Log(AttackLock);
         agent.speed = 0f;
         gameObject.transform.LookAt(player.transform.position);
         if (j == 0) ani.SetTrigger("Attack1");
@@ -100,12 +108,15 @@ public class GobinManage : MonoBehaviour
         {
             StopCoroutine(StateChange());
         }
-        async = StartCoroutine(StateChange());
+        async=StartCoroutine(StateChange());
+        }
+        
     }
 
     private void StateDamage()
     {
         ani.SetTrigger("hit");
+        ChangeHealth(damage_value);
         agent.speed = 0;
     }
 
@@ -135,8 +146,8 @@ public class GobinManage : MonoBehaviour
     {
         CurrentState = State.Dead;
     }
-    private IEnumerator StateChange()
-    {
+    private IEnumerator StateChange( )
+    {   
         yield return new WaitForSeconds(CD);
         AttackLock = false;
         async = null;
