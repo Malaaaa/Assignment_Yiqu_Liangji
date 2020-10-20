@@ -9420,7 +9420,7 @@ GameObject:
   - component: {fileID: 1221363363}
   m_Layer: 0
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -10180,7 +10180,7 @@ GameObject:
   - component: {fileID: 1333232681}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10642,6 +10642,7 @@ MonoBehaviour:
   animator: {fileID: 1047950688}
   Enemy: {fileID: 1049438929}
   hpUI: {fileID: 9489844}
+  FireBall: {fileID: 1934418001083089937, guid: a14f470505b6b0344ba44b48dc3f4205, type: 3}
   Maxhealth: 100
   Curhealth: 0
   attackRange: 2
@@ -14280,6 +14281,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1333232681}
     m_Modifications:
+    - target: {fileID: 100068, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 100070, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 100072, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 100074, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
       propertyPath: m_Name
       value: Goblin_rouge

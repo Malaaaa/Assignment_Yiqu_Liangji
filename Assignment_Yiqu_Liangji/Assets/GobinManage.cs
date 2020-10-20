@@ -114,7 +114,6 @@ public class GobinManage : MonoBehaviour
         if (AttackLock == false){
             j = Random.Range(0, 2);
         AttackLock = true;
-        Debug.Log(AttackLock);
         agent.speed = 0f;
         gameObject.transform.LookAt(player.transform.position);
         if (j == 0) ani.SetTrigger("Attack1");

@@ -15,6 +15,8 @@ public class ThirdPersonControllerScript : MonoBehaviour
 
     public Slider hpUI;
 
+    public GameObject FireBall;
+
     public float Maxhealth=100;
 
     public float Curhealth;
@@ -64,9 +66,6 @@ public class ThirdPersonControllerScript : MonoBehaviour
     {
         storedClickedPosition = Vector3.zero;
         Enemy = GameObject.FindWithTag(ENEMY).transform;
-        Curhealth = Maxhealth;
-        hpUI.maxValue = Maxhealth;
-        hpUI.value = Curhealth;
     }
 
 
@@ -133,7 +132,9 @@ public class ThirdPersonControllerScript : MonoBehaviour
                         *  If distance less than attack distance, just attack.
                         *  If distance large than attack distance, player should move nearly.
                         */
+                        Debug.Log(ENEMY_DISTANCE);
                         if (ENEMY_DISTANCE <= attackRange) {
+                            Debug.Log("attack enemy");
                             // attack function
                             // stop moving, look at enemy and attack
                             storedClickedPosition = Vector3.zero;
@@ -144,11 +145,19 @@ public class ThirdPersonControllerScript : MonoBehaviour
                             }
                             ChangeAnimatorStatus(ATTACK_FUNCTION, false);
                         } else {
+                            Debug.Log("moving to enemy");
                             Moving(new Vector3(raycastHit.point.x, 0f, raycastHit.point.z));
                         }
                         break;
                 }  
             }
+        } else if (Input.GetKeyDown(KeyCode.E)) {
+            // player push E to range attack
+            GameObject fireImg = (GameObject)Instantiate(FireBall);
+            Vector3 firePosition = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z + 1f);
+            fireImg.transform.position = firePosition;
+            fireImg.GetComponent<Rigidbody>().velocity = transform.forward * 20f;
+            fireImg.SetActive(true);
         } else {
             if (hasStoredPosition()) {
                 Moving2Destination();
@@ -174,6 +183,18 @@ public class ThirdPersonControllerScript : MonoBehaviour
             RemoveDestinationPosition();
         }
         ResetBodyPosition();
+        Curhealth = Maxhealth;
+        hpUI.maxValue = Maxhealth;
+        hpUI.value = Curhealth;
+        Debug.Log(Curhealth);
+    }
+
+    void onTriggerEnter(Collider collider) {
+
+        if (collider.name == "Goblin_rouge") {
+            Debug.Log("Attack");
+            ChangeHealth(10f);
+        }
     }
 
     private void Moving(Vector3 destinationPosition) {
@@ -305,7 +326,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
      */
     public void ChangeHealth(float amount) {
 
-        Curhealth -= amount;
+        Curhealth = amount;
 
     }
 }
