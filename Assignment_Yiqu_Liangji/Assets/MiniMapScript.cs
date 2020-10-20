@@ -16,7 +16,6 @@ public class MiniMapScript : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.N)) {
-            Debug.Log("input get");
             miniMap.SetActive(!CheckStatus());
         }
     }

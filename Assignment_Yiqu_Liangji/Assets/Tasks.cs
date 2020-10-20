@@ -20,10 +20,12 @@ public class Tasks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        task= Textinputer.Gettask.gettask();
-        if(task)
-        {
-            TASK1.text = textFile. text;
+        if (Textinputer.Gettask != null) {
+            task= Textinputer.Gettask.GetTask();
+            if(task)
+            {
+                TASK1.text = textFile.text;
+            }
         }
     }
     public void ManageTaskbox(){

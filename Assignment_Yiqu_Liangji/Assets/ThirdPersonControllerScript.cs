@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ThirdPersonControllerScript : MonoBehaviour
 {
@@ -27,6 +28,16 @@ public class ThirdPersonControllerScript : MonoBehaviour
     public string MOVING_FUNCTION_NORMAL_WALK = "Moving";
 
     public string MOVING_FUNCTION_RUNNING = "Running";
+
+    public string SPEAKING = "Speak";
+
+    public string MINIMAP = "MiniMap";
+
+    public string TASKS = "Tasks";
+
+    public string TASK = "Task";
+
+    public string MAIN_MENU = "MainMenu";
 
     // check the direction which player to destination
     public float DESTINATION_DIRECTION = 1f;
@@ -71,7 +82,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
         }else{
             animator.SetBool(PLAYER_STATUTS_INCOMBAT, false);
         }
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButton(0) && !isClickedTheSpeaking()) {
             
             // get current mouse screen position
             Vector3 currentScreenPosition = Input.mousePosition;
@@ -183,5 +194,20 @@ public class ThirdPersonControllerScript : MonoBehaviour
     }
     private void Attack(){
         
+    }
+
+    private bool isClickedTheSpeaking() {
+
+        GameObject currentGameObject = EventSystem.current.currentSelectedGameObject;
+        if (currentGameObject != null) {
+            if (currentGameObject.name == SPEAKING 
+                || currentGameObject.name == MINIMAP 
+                || currentGameObject.name == TASKS
+                || currentGameObject.name == TASK
+                || currentGameObject.name == MAIN_MENU) {
+                return true;
+            }
+        }
+        return false;
     }
 }

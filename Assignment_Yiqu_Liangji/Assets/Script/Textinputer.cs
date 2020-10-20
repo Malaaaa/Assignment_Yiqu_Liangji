@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Textinputer : MonoBehaviour
 {
@@ -32,16 +33,16 @@ public class Textinputer : MonoBehaviour
     }
     void Update()
     {
-
+        GameObject currentObject = EventSystem.current.currentSelectedGameObject;
         SpeakDistance = Vector3.Distance(NPC.transform.position, player.transform.position);     
-        if(SpeakDistance < 2f&&currentline<endline&&Input.GetMouseButtonDown(0)) {
+        if(SpeakDistance < 2f && currentline < endline && Input.GetMouseButtonDown(0) && !task) {
             Textbox.SetActive(true);
             thetext.text = textLines[currentline];
             if(Input.GetMouseButtonDown(0))
             {
                 currentline +=1;
             }
-            if(currentline>=endline)
+            if(currentline >= endline)
             {
                 task=true;
                 Textbox.SetActive(false);
@@ -49,7 +50,7 @@ public class Textinputer : MonoBehaviour
 
         }
     }
-    public bool gettask(){
+    public bool GetTask(){
         return task;
     }
 }
