@@ -83,6 +83,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
             if (Physics.Raycast(groundCheckRay, out raycastHit)) {
                 GameObject currentBlockedObject = raycastHit.collider.gameObject;
                 // if mouse clicked to the ground, player should be move to this position
+                Debug.Log(currentBlockedObject.tag);
                 if (currentBlockedObject.tag == GROUND) {
                     Vector3 mouseClickedPosition = raycastHit.point;
                     StoreDestinationPosition(mouseClickedPosition);
@@ -116,11 +117,13 @@ public class ThirdPersonControllerScript : MonoBehaviour
      */
     private void TakeSmoothRotation() {
         
-        Quaternion oldRotation = transform.rotation;
-        transform.LookAt(storedClickedPosition);
-        Quaternion newRotation = transform.rotation;
-        transform.rotation = oldRotation;
-        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, turnSmooth * Time.deltaTime);
+        // Quaternion oldRotation = transform.rotation;
+        // transform.LookAt(storedClickedPosition);
+        // Quaternion newRotation = transform.rotation;
+        // transform.rotation = oldRotation;
+        // transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, turnSmooth * Time.deltaTime);
+        Quaternion targetRotation = Quaternion.LookRotation(storedClickedPosition - transform.position);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turnSmooth * Time.deltaTime);
     }
 
     // Checking the new destination or had

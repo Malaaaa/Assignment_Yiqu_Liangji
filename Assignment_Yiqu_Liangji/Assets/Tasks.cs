@@ -12,7 +12,10 @@ public class Tasks : MonoBehaviour
     public bool task;
 
     // Start is called before the first frame update
-
+    void Start()
+    {
+        TASKBOX.SetActive(false);
+    }
 
     // Update is called once per frame
     void Update()
@@ -22,7 +25,12 @@ public class Tasks : MonoBehaviour
         {
             TASK1.text = textFile. text;
         }
-        
     }
-
+    public void ManageTaskbox(){
+        if(TASKBOX.activeSelf){
+            TASKBOX.SetActive(false);
+        }else{
+            TASKBOX.SetActive(true);
+        }
+    }
 }

@@ -33,10 +33,8 @@ public class Textinputer : MonoBehaviour
     void Update()
     {
 
-        SpeakDistance = Vector3.Distance(NPC.transform.position, player.transform.position);  
-        Debug.Log(SpeakDistance);   
+        SpeakDistance = Vector3.Distance(NPC.transform.position, player.transform.position);     
         if(SpeakDistance < 2f&&currentline<endline&&Input.GetMouseButtonDown(0)) {
-            Debug.Log("come in");
             Textbox.SetActive(true);
             thetext.text = textLines[currentline];
             if(Input.GetMouseButtonDown(0))
