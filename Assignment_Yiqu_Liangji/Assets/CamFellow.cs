@@ -21,31 +21,24 @@ public class CamFellow : MonoBehaviour
     private void Scale()
     {
         float dis = offset.magnitude;
-        dis += Input.GetAxis("Mouse ScrollWheel") * 5;
+        dis -= Input.GetAxis("Mouse ScrollWheel") * 5;
         if (dis < 10 || dis > 40)
         {
             return;
         }
         offset = offset.normalized * dis;
     }
-    private void Rotate()
+    private void Rotate() 
     {
+        var mouse_x = Input.GetAxis("Mouse X");
+        var mouse_y = -Input.GetAxis("Mouse Y");
         if (Input.GetMouseButton(1))
         {
-            Vector3 pos = transform.position;
-            Vector3 rot = transform.eulerAngles;
-
-            transform.RotateAround(target.position, Vector3.up, Input.GetAxis("Mouse X") * 20);
-            transform.RotateAround(target.position, Vector3.left, Input.GetAxis("Mouse Y") * 20);
-            float x = transform.eulerAngles.x;
-            float y = transform.eulerAngles.y;
-
-            if (x < 20 || x > 45 || y < 0 || y > 40)
-            {
-                transform.position = pos;
-                transform.eulerAngles = rot;
-            }
-            offset = transform.position - target.position;
+            transform.Translate(Vector3.left*(mouse_x*15f)*Time.deltaTime);
+            transform.Translate(Vector3.up*(mouse_y*15f)*Time.deltaTime);
+            transform.RotateAround(target.transform.position, Vector3.up, mouse_x*5);
+            transform.RotateAround(target.transform.position, transform.right, mouse_y*5);
         }
     }
+
 }
