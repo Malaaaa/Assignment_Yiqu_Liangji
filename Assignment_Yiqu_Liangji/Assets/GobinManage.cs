@@ -30,6 +30,7 @@ public class GobinManage : MonoBehaviour
     public float amount;
     public float damage_value;
     public int j;
+    public ThirdPersonControllerScript playerstatement;
     private void Start()
     {
         CurrentState = State.Idle;
@@ -57,26 +58,33 @@ public class GobinManage : MonoBehaviour
             case State.Attack:
                 StateAttack();
                 break;
-            case State.Damage:
-                StateDamage();
-                break;
             case State.Dead:
                 StateDead();
                 break;
         }
         hpUI.value = Curhealth;
+        if (Curhealth <= 0f) {
+            StateDead();
+        }
     }
 
 
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "PlayerWappon"){
-            ChangeDamage();
+
+        // string blockTag = playerstatement.blockedObjectTag;
+        // if (blockTag != null) {
+        //     Debug.Log(blockTag);
+        // }
+        // if(other.tag == "PlayerWappon" && blockTag != null && (blockTag == "Enemy" || blockTag == "EnemyWappon")){
+        if(other.tag == "PlayerWappon") {
+            // ChangeDamage();
             ChangeHealth(10f);
         }
         if(other.tag == "FireBall"){
-            ChangeDamage();
+
+            // ChangeDamage();
             ChangeHealth(15f);
         }
     }
@@ -131,8 +139,8 @@ public class GobinManage : MonoBehaviour
 
     private void StateDamage()
     {
-        ani.SetTrigger("Hit");
-        agent.speed = 0;
+            ani.SetTrigger("Hit");
+            agent.speed = 0;
     }
 
     private void StateDead()

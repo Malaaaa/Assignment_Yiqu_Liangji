@@ -25,6 +25,8 @@ public class ThirdPersonControllerScript : MonoBehaviour
 
     public bool inCombat = false;
 
+    public bool Reward = false;
+
     private RaycastHit raycastHit;
 
     private Vector3 storedClickedPosition;
@@ -35,6 +37,8 @@ public class ThirdPersonControllerScript : MonoBehaviour
     public string PLAYER_STATUTS_INCOMBAT = "Combat";
 
     public string ATTACK_FUNCTION = "Attack";
+
+    public string blockedObjectTag;
 
     // Not in combat walking
     public string MOVING_FUNCTION_NORMAL_WALK = "Moving";
@@ -101,8 +105,13 @@ public class ThirdPersonControllerScript : MonoBehaviour
          *  If player run away, the distance large than detection distance, player will be in normal status.
          *  Players movement speed should large than enemy
          */ 
-        Enemy = GameObject.FindWithTag(ENEMY).transform;
-        ENEMY_DISTANCE = Vector3.Distance(Enemy.transform.position, transform.position);
+        GameObject enemyTempObject = GameObject.FindWithTag(ENEMY);
+        if (enemyTempObject == null) {
+            ENEMY_DISTANCE = 0f;
+        } else {
+            Enemy = enemyTempObject.transform;
+            ENEMY_DISTANCE = Vector3.Distance(Enemy.transform.position, transform.position);
+        }
         if (Input.GetMouseButton(0) && !isClickedTheSpeaking()) {
             
             // get current mouse screen position
@@ -116,24 +125,38 @@ public class ThirdPersonControllerScript : MonoBehaviour
                 GameObject currentBlockedObject = raycastHit.collider.gameObject;
                 // if mouse clicked to the ground, player should be move to this position
                 string blockedObjectTag = currentBlockedObject.tag;
+                // Debug.Log(blockedObjectTag);
                 switch (blockedObjectTag){
                     case "Ground" :
                         /*
                         *  If player in combat, but he run away
                         */
-                        if (inCombat) {
-                            animator.SetBool(ATTACK_FUNCTION, false);
+                        // if (inCombat) {
+                        //     ChangeAnimatorStatus(ATTACK_FUNCTION, false);
+                        //     if (enemyTempObject == null) {
+                        //         Debug.Log("in 1");
+                        //         inCombat = false;
+                        //         ChangeAnimatorStatus(PLAYER_STATUTS_INCOMBAT, false);
+                        //     }
+                        // }
+                        if (inCombat && enemyTempObject == null) {
+                            // Debug.Log("Enemy down");
+                            inCombat = false;
+                            ChangeAnimatorStatus(ATTACK_FUNCTION, false);
+                            ChangeAnimatorStatus(PLAYER_STATUTS_INCOMBAT, false);
                         }
                         Moving(raycastHit.point);
                         break;
                     case "Enemy" :
-                        EnemyAttack();
+                        // Debug.Log("Clicked enemy");
+                        EnemyAttack(currentBlockedObject.transform.position);
                         break;
                     case "EnemyWappon" :
-                        EnemyAttack();
+                        // Debug.Log("Clicked enemy");
+                        EnemyAttack(currentBlockedObject.transform.position);
                         break;
                     case "studentID":
-                        Reward();
+                        GetReward();
                         break;
                         
                 }  
@@ -151,6 +174,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
             } else if (inCombat) {
                 ChangeAnimatorStatus(ATTACK_FUNCTION, true);
             }else {
+
                 ChangeAnimatorStatus(MOVING_FUNCTION_NORMAL_WALK, false);
             }
         }
@@ -159,10 +183,10 @@ public class ThirdPersonControllerScript : MonoBehaviour
          * if player in combat but far away from enemy, 
          * change player status
          */
-        if (ENEMY_DISTANCE > GURAD_DISTANCE && inCombat) {
+        if ((ENEMY_DISTANCE > GURAD_DISTANCE && inCombat) || 
+            (enemyTempObject == null && !inCombat)) {
+            // ChangeAnimatorStatus(MOVING_FUNCTION_NORMAL_WALK, true);
             ChangeAnimatorStatus(PLAYER_STATUTS_INCOMBAT, false);
-            ChangeAnimatorStatus(MOVING_FUNCTION_NORMAL_WALK, true);
-            inCombat = false;
         }
         RunOrWalk();
         // check player whether near the destination position less than 1f;
@@ -172,9 +196,15 @@ public class ThirdPersonControllerScript : MonoBehaviour
         ResetBodyPosition();
         hpUI.maxValue = Maxhealth;
         hpUI.value = Curhealth;
+        // Debug.Log("===========================");
+        // Debug.Log("Walk: " + animator.GetBool(MOVING_FUNCTION_NORMAL_WALK));
+        // Debug.Log("Running: " + animator.GetBool(MOVING_FUNCTION_RUNNING));
+        // Debug.Log("Incombat: " + animator.GetBool(PLAYER_STATUTS_INCOMBAT));
+        // Debug.Log("Attack: " + animator.GetBool(ATTACK_FUNCTION));
+        // Debug.Log("===========================");
     }
 
-    private void EnemyAttack() {
+    private void EnemyAttack(Vector3 currentTargetPosition) {
         /*
          *  mouse clicked to the enemy, should check the distance.
          *  If distance less than attack distance, just attack.
@@ -184,7 +214,8 @@ public class ThirdPersonControllerScript : MonoBehaviour
             // attack function
             // stop moving, look at enemy and attack
             storedClickedPosition = Vector3.zero;
-            // transform.LookAt(new Vector3(currentBlockedObject.transform.position.x, 0f, currentBlockedObject.transform.position.z));
+            transform.LookAt(new Vector3(currentTargetPosition.x, transform.position.y, currentTargetPosition.z));
+            ChangeAnimatorStatus(PLAYER_STATUTS_INCOMBAT, true);
             ChangeAnimatorStatus(ATTACK_FUNCTION, true);
             if (!inCombat) {
                 inCombat = true;
@@ -245,6 +276,8 @@ public class ThirdPersonControllerScript : MonoBehaviour
         ChangeAnimatorStatus(MOVING_FUNCTION_NORMAL_WALK, true);
         if (inCombat) {
             ChangeAnimatorStatus(PLAYER_STATUTS_INCOMBAT, true);
+        } else {
+            ChangeAnimatorStatus(PLAYER_STATUTS_INCOMBAT, false);
         }
     }
 
@@ -327,12 +360,11 @@ public class ThirdPersonControllerScript : MonoBehaviour
         Curhealth -= amount;
 
     }
-    public bool Reward(){
+    public void GetReward(){
         if(studentID.activeSelf)
         {
-            studentID.SetActive(false);
-            return true;
+            studentID.SetActive(false);   
+            Reward = true;
         }
-        return false;
     }
 }

@@ -41,8 +41,9 @@ public class Textinputer : MonoBehaviour
     }
     void Update()
     {
-        reward = Taskfinished.Reward();
-        if(RewardFile!=null&&reward){
+        reward = Taskfinished.Reward;
+        if(RewardFile != null && reward){
+            Debug.Log("Reward comein");
             textLines=(TaskFile. text. Split('\n'));
             currentline=0;
             endline =2;

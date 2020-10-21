@@ -17,7 +17,7 @@ public class PlayerBodyScript : MonoBehaviour
 
     void OnTriggerEnter(Collider collider) {
 
-        if (collider.tag == "EnemyWappon") {
+        if (collider.tag == "EnemyWappon" || collider.tag == "Enemy") {
             thirdPersonController.ChangeHealth(amount);
         }
     }
