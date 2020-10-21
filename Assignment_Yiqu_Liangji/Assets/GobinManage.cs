@@ -72,6 +72,7 @@ public class GobinManage : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "PlayerWappon"){
+            Debug.Log("sward touched to enemy");
             ChangeDamage();
             ChangeHealth(10f);
         }
@@ -116,16 +117,16 @@ public class GobinManage : MonoBehaviour
     {
         if (AttackLock == false){
             j = Random.Range(0, 2);
-        AttackLock = true;
-        agent.speed = 0f;
-        gameObject.transform.LookAt(player.transform.position);
-        if (j == 0) ani.SetTrigger("Attack1");
-        else ani.SetTrigger("Attack2");
-        if (async != null)
-        {
-            StopCoroutine(StateChange());
-        }
-        async=StartCoroutine(StateChange());
+            AttackLock = true;
+            agent.speed = 0f;
+            gameObject.transform.LookAt(player.transform.position);
+            if (j == 0) ani.SetTrigger("Attack1");
+            else ani.SetTrigger("Attack2");
+            if (async != null)
+            {
+                StopCoroutine(StateChange());
+            }
+            async=StartCoroutine(StateChange());
         }
     }
 
