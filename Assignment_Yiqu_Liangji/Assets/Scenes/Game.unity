@@ -550,6 +550,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 1847895092023626, guid: 6b1964733acd8264b99323299f8c1e3b, type: 3}
+      propertyPath: m_TagString
+      value: PlayerWappon
+      objectReference: {fileID: 0}
     - target: {fileID: 1877395471307426, guid: 6b1964733acd8264b99323299f8c1e3b, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -665,6 +669,14 @@ PrefabInstance:
     - target: {fileID: 65127291933801236, guid: 6b1964733acd8264b99323299f8c1e3b, type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 65127291933801236, guid: 6b1964733acd8264b99323299f8c1e3b, type: 3}
+      propertyPath: m_Size.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 65127291933801236, guid: 6b1964733acd8264b99323299f8c1e3b, type: 3}
+      propertyPath: m_Size.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 95861659920858144, guid: 6b1964733acd8264b99323299f8c1e3b, type: 3}
       propertyPath: m_Controller
@@ -7405,20 +7417,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100068, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
   m_PrefabInstance: {fileID: 1881204556}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &894651820
-MeshCollider:
+--- !u!65 &894651820
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 894651817}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  serializedVersion: 2
+  m_Size: {x: 4.765462, y: 4, z: 3.0226688}
+  m_Center: {x: -0.15910487, y: -0.07764977, z: 3.3875842}
 --- !u!1 &900432625
 GameObject:
   m_ObjectHideFlags: 0
@@ -14323,15 +14334,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100068, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: EnemyWappon
       objectReference: {fileID: 0}
     - target: {fileID: 100070, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 100072, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 100074, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
       propertyPath: m_Name
@@ -14427,15 +14438,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400074, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 400074, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 400074, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 741f73214c8e59045b42ebac4be91444, type: 3}
       propertyPath: m_Controller

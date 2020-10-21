@@ -39,7 +39,6 @@ public class GobinManage : MonoBehaviour
         Curhealth = Maxhealth;
         AttackLock = false;
         hpUI.maxValue = Maxhealth;
-        hpUI.value = Curhealth;
         StudentsID.SetActive(false);
     }
 
@@ -65,16 +64,20 @@ public class GobinManage : MonoBehaviour
                 StateDead();
                 break;
         }
+        hpUI.value = Curhealth;
     }
-    private void OnTriggerEnter(Collider other)
+
+
+
+    void OnTriggerEnter(Collider other)
     {
-        if(other.name=="sword"){
+        if(other.tag == "PlayerWappon"){
             ChangeDamage();
-            ChangeHealth(5f);
+            ChangeHealth(10f);
         }
-        if(other.name=="Ball"){
+        if(other.tag == "FireBall"){
             ChangeDamage();
-            ChangeHealth(8f);
+            ChangeHealth(15f);
         }
     }
     public void ChangeHealth(float amount) {
@@ -128,7 +131,7 @@ public class GobinManage : MonoBehaviour
 
     private void StateDamage()
     {
-        ani.SetTrigger("hit");
+        ani.SetTrigger("Hit");
         agent.speed = 0;
     }
 
