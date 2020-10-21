@@ -15,7 +15,7 @@ public class PlayerBodyScript : MonoBehaviour
         
     }
 
-    void onTriggerEnter(Collider collider) {
+    void OnTriggerEnter(Collider collider) {
         Debug.Log(collider.name);
 
         if (collider.name == "Goblin_rouge") {

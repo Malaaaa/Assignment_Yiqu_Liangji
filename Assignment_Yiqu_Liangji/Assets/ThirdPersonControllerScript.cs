@@ -186,14 +186,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
         hpUI.value = Curhealth;
     }
 
-    void onTriggerEnter(Collider collider) {
-        Debug.Log(collider);
 
-        if (collider.name == "Goblin_rouge") {
-            Debug.Log("Attacked");
-            ChangeHealth(10f);
-        }
-    }
 
     private void Moving(Vector3 destinationPosition) {
 
@@ -324,7 +317,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
      */
     public void ChangeHealth(float amount) {
 
-        Curhealth = amount;
+        Curhealth -= amount;
 
     }
 }
