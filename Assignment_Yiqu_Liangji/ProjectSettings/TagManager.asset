@@ -10,6 +10,7 @@ TagManager:
   - PlayerWappon
   - FireBall
   - studentID
+  - NPC
   layers:
   - Default
   - TransparentFX

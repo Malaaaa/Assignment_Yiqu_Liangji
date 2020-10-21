@@ -113,19 +113,19 @@ public class ThirdPersonControllerScript : MonoBehaviour
             ENEMY_DISTANCE = Vector3.Distance(Enemy.transform.position, transform.position);
         }
         if (Input.GetMouseButton(0) && !isClickedTheSpeaking()) {
-            
+
             // get current mouse screen position
             Vector3 currentScreenPosition = Input.mousePosition;
  
             // declear a ray to screen position
             Ray groundCheckRay = Camera.main.ScreenPointToRay(currentScreenPosition);
-
              // if the ray touch to the ground
             if (Physics.Raycast(groundCheckRay, out raycastHit)) {
                 GameObject currentBlockedObject = raycastHit.collider.gameObject;
                 // if mouse clicked to the ground, player should be move to this position
                 string blockedObjectTag = currentBlockedObject.tag;
                 // Debug.Log(blockedObjectTag);
+                // Debug.Log(currentBlockedObject.name);
                 switch (blockedObjectTag){
                     case "Ground" :
                         /*
@@ -147,6 +147,9 @@ public class ThirdPersonControllerScript : MonoBehaviour
                         }
                         Moving(raycastHit.point);
                         break;
+                    case "NPC" :
+                        Moving(raycastHit.point);
+                        break;
                     case "Enemy" :
                         // Debug.Log("Clicked enemy");
                         EnemyAttack(currentBlockedObject.transform.position);
@@ -155,7 +158,11 @@ public class ThirdPersonControllerScript : MonoBehaviour
                         // Debug.Log("Clicked enemy");
                         EnemyAttack(currentBlockedObject.transform.position);
                         break;
+                    case "Untagged" :
+                        EnemyAttack(currentBlockedObject.transform.position);
+                        break;
                     case "studentID":
+                        Reward = true;
                         GetReward();
                         break;
                         
@@ -342,7 +349,8 @@ public class ThirdPersonControllerScript : MonoBehaviour
         
         float tempDistance = Vector3.Distance(transform.position, animator.transform.position);
         if (tempDistance > 0.5f) {
-            animator.transform.position = transform.position;
+            // animator.transform.position = transform.position;
+            transform.position = animator.transform.position;
         }
     }
 
@@ -363,8 +371,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
     public void GetReward(){
         if(studentID.activeSelf)
         {
-            studentID.SetActive(false);   
-            Reward = true;
+            studentID.SetActive(false);
         }
     }
 }

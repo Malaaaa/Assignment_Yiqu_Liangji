@@ -15,7 +15,7 @@ public class CamFellow : MonoBehaviour
     void Update()
     {
         transform.position = target.position + offset;
-        Rotate();
+        // Rotate();
         Scale();
     }
     private void Scale()
@@ -28,17 +28,17 @@ public class CamFellow : MonoBehaviour
         }
         offset = offset.normalized * dis;
     }
-    private void Rotate() 
-    {
-        var mouse_x = Input.GetAxis("Mouse X");
-        var mouse_y = -Input.GetAxis("Mouse Y");
-        if (Input.GetMouseButton(1))
-        {
-            transform.Translate(Vector3.left*(mouse_x*15f)*Time.deltaTime);
-            transform.Translate(Vector3.up*(mouse_y*15f)*Time.deltaTime);
-            transform.RotateAround(target.transform.position, Vector3.up, mouse_x*5);
-            transform.RotateAround(target.transform.position, transform.right, mouse_y*5);
-        }
-    }
+    // private void Rotate() 
+    // {
+    //     var mouse_x = Input.GetAxis("Mouse X");
+    //     var mouse_y = -Input.GetAxis("Mouse Y");
+    //     if (Input.GetMouseButton(1))
+    //     {
+    //         transform.Translate(Vector3.left*(mouse_x*15f)*Time.deltaTime);
+    //         transform.Translate(Vector3.up*(mouse_y*15f)*Time.deltaTime);
+    //         transform.RotateAround(target.transform.position, Vector3.up, mouse_x*5);
+    //         transform.RotateAround(target.transform.position, transform.right, mouse_y*5);
+    //     }
+    // }
 
 }

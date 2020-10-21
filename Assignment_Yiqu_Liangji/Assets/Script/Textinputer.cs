@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class Textinputer : MonoBehaviour
 {
@@ -33,7 +32,7 @@ public class Textinputer : MonoBehaviour
     void Start()
     {
         if(TaskFile!=null){
-            textLines=(TaskFile. text. Split('\n'));
+            textLines=(TaskFile.text.Split('\n'));
         } 
         Textbox.SetActive(false);
         notask.SetActive(true);
@@ -41,17 +40,34 @@ public class Textinputer : MonoBehaviour
     }
     void Update()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        NPC = GameObject.FindGameObjectWithTag("NPC");
+        SpeakDistance = Vector3.Distance(NPC.transform.position, player.transform.position); 
         reward = Taskfinished.Reward;
-        if(RewardFile != null && reward){
-            Debug.Log("Reward comein");
-            textLines=(TaskFile. text. Split('\n'));
-            currentline=0;
-            endline =2;
+        Debug.Log(reward);
+        if(reward && SpeakDistance > 2f){
+            textLines = (RewardFile.text.Split('\n'));
+            currentline = 0;
+            endline = 3;
             notask.SetActive(false);
             done.SetActive(true);    
         }
-        GameObject currentObject = EventSystem.current.currentSelectedGameObject;
-        SpeakDistance = Vector3.Distance(NPC.transform.position, player.transform.position);     
+        if (reward && Input.GetMouseButtonDown(0) && SpeakDistance < 2f && currentline < endline) {
+
+            Textbox.SetActive(true);
+            thetext.text = textLines[currentline];
+            if(Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("clicked conversation");
+
+                currentline +=1;
+            }
+            if(currentline >= endline)
+            {
+                Textbox.SetActive(false);
+            }         
+        }
+        // GameObject currentObject = EventSystem.current.currentSelectedGameObject;
         if(SpeakDistance < 2f && currentline < endline && Input.GetMouseButtonDown(0) && !task) {
             Textbox.SetActive(true);
             thetext.text = textLines[currentline];

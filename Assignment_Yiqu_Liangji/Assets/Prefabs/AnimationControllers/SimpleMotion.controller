@@ -17,6 +17,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: Running
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Attack
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3775672284073279394}
   m_Solo: 0
@@ -129,6 +132,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: Combat
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Attack
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 37731460100966214}
@@ -263,8 +269,8 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.24999999
-  m_TransitionOffset: 0
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0.80601096
   m_ExitTime: 0
   m_HasExitTime: 0
   m_HasFixedDuration: 1
@@ -433,7 +439,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 780, y: 100, z: 0}
+  m_AnyStatePosition: {x: 30, y: -90, z: 0}
   m_EntryPosition: {x: 40, y: 0, z: 0}
   m_ExitPosition: {x: 40, y: 80, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -462,7 +468,7 @@ AnimatorStateTransition:
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0.25000006
-  m_TransitionOffset: 0
+  m_TransitionOffset: 0.75172
   m_ExitTime: 0
   m_HasExitTime: 0
   m_HasFixedDuration: 1
@@ -492,9 +498,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.24999997
-  m_TransitionOffset: 0
-  m_ExitTime: 0.024579994
+  m_TransitionDuration: 0.24999996
+  m_TransitionOffset: 0.3258736
+  m_ExitTime: 0.024579996
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
