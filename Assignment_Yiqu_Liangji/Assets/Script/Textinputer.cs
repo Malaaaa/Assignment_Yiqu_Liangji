@@ -9,14 +9,16 @@ public class Textinputer : MonoBehaviour
     public static Textinputer Gettask;
     public GameObject Textbox;
     public Text thetext;
-    public TextAsset textFile;
+    public TextAsset TaskFile;
+    public TextAsset RewardFile;
     public string[] textLines;
     public int currentline = 0;
-    public int endline;
+    public int endline = 3;
     public GameObject player;
     public GameObject NPC;
     public float SpeakDistance;
     public bool task=false;
+    public bool reward = false;
 
 
 
@@ -27,12 +29,18 @@ public class Textinputer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(textFile!=null)
-        textLines=(textFile. text. Split('\n'));
+        if(TaskFile!=null){
+            textLines=(TaskFile. text. Split('\n'));
+        } 
         Textbox.SetActive(false);
     }
     void Update()
     {
+        if(RewardFile!=null&&reward){
+            textLines=(TaskFile. text. Split('\n'));
+            currentline=0;
+            endline =2; 
+        }
         GameObject currentObject = EventSystem.current.currentSelectedGameObject;
         SpeakDistance = Vector3.Distance(NPC.transform.position, player.transform.position);     
         if(SpeakDistance < 2f && currentline < endline && Input.GetMouseButtonDown(0) && !task) {
