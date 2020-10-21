@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ThirdPersonControllerScript : MonoBehaviour
 {
-
+    public GameObject studentID;
     public float speed = 2.0f;
 
     public Animator animator;
@@ -131,6 +131,9 @@ public class ThirdPersonControllerScript : MonoBehaviour
                         break;
                     case "EnemyWappon" :
                         EnemyAttack();
+                        break;
+                    case "studentID":
+                        Reward();
                         break;
                         
                 }  
@@ -323,5 +326,13 @@ public class ThirdPersonControllerScript : MonoBehaviour
 
         Curhealth -= amount;
 
+    }
+    public bool Reward(){
+        if(studentID.activeSelf)
+        {
+            studentID.SetActive(false);
+            return true;
+        }
+        return false;
     }
 }

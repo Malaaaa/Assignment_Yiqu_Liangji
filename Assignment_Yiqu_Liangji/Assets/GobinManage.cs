@@ -72,7 +72,6 @@ public class GobinManage : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "PlayerWappon"){
-            Debug.Log("sward touched to enemy");
             ChangeDamage();
             ChangeHealth(10f);
         }

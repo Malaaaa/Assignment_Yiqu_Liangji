@@ -9,6 +9,7 @@ TagManager:
   - EnemyWappon
   - PlayerWappon
   - FireBall
+  - studentID
   layers:
   - Default
   - TransparentFX

@@ -19,6 +19,9 @@ public class Textinputer : MonoBehaviour
     public float SpeakDistance;
     public bool task=false;
     public bool reward = false;
+    public ThirdPersonControllerScript Taskfinished;
+    public GameObject notask;
+    public GameObject done;
 
 
 
@@ -33,13 +36,18 @@ public class Textinputer : MonoBehaviour
             textLines=(TaskFile. text. Split('\n'));
         } 
         Textbox.SetActive(false);
+        notask.SetActive(true);
+        done.SetActive(false);
     }
     void Update()
     {
+        reward = Taskfinished.Reward();
         if(RewardFile!=null&&reward){
             textLines=(TaskFile. text. Split('\n'));
             currentline=0;
-            endline =2; 
+            endline =2;
+            notask.SetActive(false);
+            done.SetActive(true);    
         }
         GameObject currentObject = EventSystem.current.currentSelectedGameObject;
         SpeakDistance = Vector3.Distance(NPC.transform.position, player.transform.position);     
