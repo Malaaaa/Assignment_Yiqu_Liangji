@@ -81,11 +81,14 @@ public class GobinManage : MonoBehaviour
         if(other.tag == "PlayerWappon") {
             // ChangeDamage();
             ChangeHealth(10f);
+            ani.SetTrigger("Hit");
         }
         if(other.tag == "FireBall"){
 
             // ChangeDamage();
             ChangeHealth(15f);
+            ani.SetTrigger("Hit");
+
         }
     }
     public void ChangeHealth(float amount) {
