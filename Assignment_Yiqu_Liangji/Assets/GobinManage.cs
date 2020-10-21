@@ -39,7 +39,6 @@ public class GobinManage : MonoBehaviour
         Curhealth = Maxhealth;
         AttackLock = false;
         hpUI.maxValue = Maxhealth;
-        hpUI.value = Curhealth;
         StudentsID.SetActive(false);
     }
 
@@ -65,16 +64,21 @@ public class GobinManage : MonoBehaviour
                 StateDead();
                 break;
         }
+        hpUI.value = Curhealth;
     }
-    private void OnTriggerEnter(Collider other)
+
+
+
+    void OnTriggerEnter(Collider other)
     {
-        if(other.name=="sword"){
+        if(other.tag == "PlayerWappon"){
+            Debug.Log("sward touched to enemy");
             ChangeDamage();
-            ChangeHealth(5f);
+            ChangeHealth(10f);
         }
-        if(other.name=="Ball"){
+        if(other.tag == "FireBall"){
             ChangeDamage();
-            ChangeHealth(8f);
+            ChangeHealth(15f);
         }
     }
     public void ChangeHealth(float amount) {
@@ -113,22 +117,22 @@ public class GobinManage : MonoBehaviour
     {
         if (AttackLock == false){
             j = Random.Range(0, 2);
-        AttackLock = true;
-        agent.speed = 0f;
-        gameObject.transform.LookAt(player.transform.position);
-        if (j == 0) ani.SetTrigger("Attack1");
-        else ani.SetTrigger("Attack2");
-        if (async != null)
-        {
-            StopCoroutine(StateChange());
-        }
-        async=StartCoroutine(StateChange());
+            AttackLock = true;
+            agent.speed = 0f;
+            gameObject.transform.LookAt(player.transform.position);
+            if (j == 0) ani.SetTrigger("Attack1");
+            else ani.SetTrigger("Attack2");
+            if (async != null)
+            {
+                StopCoroutine(StateChange());
+            }
+            async=StartCoroutine(StateChange());
         }
     }
 
     private void StateDamage()
     {
-        ani.SetTrigger("hit");
+        ani.SetTrigger("Hit");
         agent.speed = 0;
     }
 

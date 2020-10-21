@@ -67,7 +67,6 @@ public class ThirdPersonControllerScript : MonoBehaviour
         storedClickedPosition = Vector3.zero;
         Enemy = GameObject.FindWithTag(ENEMY).transform;
         Curhealth = Maxhealth;
-
     }
 
 
@@ -102,7 +101,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
          *  If player run away, the distance large than detection distance, player will be in normal status.
          *  Players movement speed should large than enemy
          */ 
-
+        Enemy = GameObject.FindWithTag(ENEMY).transform;
         ENEMY_DISTANCE = Vector3.Distance(Enemy.transform.position, transform.position);
         if (Input.GetMouseButton(0) && !isClickedTheSpeaking()) {
             
@@ -127,27 +126,13 @@ public class ThirdPersonControllerScript : MonoBehaviour
                         }
                         Moving(raycastHit.point);
                         break;
-
                     case "Enemy" :
-                        /*
-                        *  mouse clicked to the enemy, should check the distance.
-                        *  If distance less than attack distance, just attack.
-                        *  If distance large than attack distance, player should move nearly.
-                        */
-                        if (ENEMY_DISTANCE <= attackRange) {
-                            // attack function
-                            // stop moving, look at enemy and attack
-                            storedClickedPosition = Vector3.zero;
-                            transform.LookAt(new Vector3(currentBlockedObject.transform.position.x, 0f, currentBlockedObject.transform.position.z));
-                            ChangeAnimatorStatus(ATTACK_FUNCTION, true);
-                            if (!inCombat) {
-                                inCombat = true;
-                            }
-                            ChangeAnimatorStatus(ATTACK_FUNCTION, false);
-                        } else {
-                            Moving(new Vector3(raycastHit.point.x, 0f, raycastHit.point.z));
-                        }
+                        EnemyAttack();
                         break;
+                    case "EnemyWappon" :
+                        EnemyAttack();
+                        break;
+                        
                 }  
             }
         } else if (Input.GetKeyDown(KeyCode.E)) {
@@ -186,7 +171,26 @@ public class ThirdPersonControllerScript : MonoBehaviour
         hpUI.value = Curhealth;
     }
 
-
+    private void EnemyAttack() {
+        /*
+         *  mouse clicked to the enemy, should check the distance.
+         *  If distance less than attack distance, just attack.
+         *  If distance large than attack distance, player should move nearly.
+         */
+        if (ENEMY_DISTANCE <= attackRange) {
+            // attack function
+            // stop moving, look at enemy and attack
+            storedClickedPosition = Vector3.zero;
+            // transform.LookAt(new Vector3(currentBlockedObject.transform.position.x, 0f, currentBlockedObject.transform.position.z));
+            ChangeAnimatorStatus(ATTACK_FUNCTION, true);
+            if (!inCombat) {
+                inCombat = true;
+            }
+            ChangeAnimatorStatus(ATTACK_FUNCTION, false);
+        } else {
+            Moving(new Vector3(raycastHit.point.x, 0f, raycastHit.point.z));
+        }
+    }
 
     private void Moving(Vector3 destinationPosition) {
 
