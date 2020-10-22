@@ -6,7 +6,7 @@ public class FireBallScript : MonoBehaviour
 {
 
     public float timeAlive = 0f;
-    public float limitTime = 6f;
+    public float limitTime = 2f;
 
     // Start is called before the first frame update
     void Start()
