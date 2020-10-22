@@ -63,7 +63,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
     // check the distance which player to enemy
     public float ENEMY_DISTANCE;
     
-    public float GURAD_DISTANCE = 5f;
+    public float GURAD_DISTANCE = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -123,7 +123,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
             if (Physics.Raycast(groundCheckRay, out raycastHit)) {
                 GameObject currentBlockedObject = raycastHit.collider.gameObject;
                 // if mouse clicked to the ground, player should be move to this position
-                string blockedObjectTag = currentBlockedObject.tag;
+                blockedObjectTag = currentBlockedObject.tag;
                 // Debug.Log(blockedObjectTag);
                 // Debug.Log(currentBlockedObject.name);
                 switch (blockedObjectTag){
@@ -221,7 +221,7 @@ public class ThirdPersonControllerScript : MonoBehaviour
             // attack function
             // stop moving, look at enemy and attack
             storedClickedPosition = Vector3.zero;
-            transform.LookAt(new Vector3(currentTargetPosition.x, transform.position.y, currentTargetPosition.z));
+            // transform.LookAt(new Vector3(currentTargetPosition.x, transform.position.y, currentTargetPosition.z));
             ChangeAnimatorStatus(PLAYER_STATUTS_INCOMBAT, true);
             ChangeAnimatorStatus(ATTACK_FUNCTION, true);
             if (!inCombat) {

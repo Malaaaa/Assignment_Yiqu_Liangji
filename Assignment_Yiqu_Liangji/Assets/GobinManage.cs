@@ -78,7 +78,9 @@ public class GobinManage : MonoBehaviour
         //     Debug.Log(blockTag);
         // }
         // if(other.tag == "PlayerWappon" && blockTag != null && (blockTag == "Enemy" || blockTag == "EnemyWappon")){
-        if(other.tag == "PlayerWappon") {
+        Debug.Log(playerstatement.blockedObjectTag);
+        if(other.tag == "PlayerWappon" && (playerstatement.blockedObjectTag == "Enemy" || playerstatement.blockedObjectTag == "EnemyWappon" || playerstatement.blockedObjectTag == "Untagged")) {
+            Debug.Log("in");
             // ChangeDamage();
             ChangeHealth(10f);
             ani.SetTrigger("Hit");

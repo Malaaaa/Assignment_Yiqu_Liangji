@@ -45,7 +45,7 @@ public class Textinputer : MonoBehaviour
         SpeakDistance = Vector3.Distance(NPC.transform.position, player.transform.position); 
         reward = Taskfinished.Reward;
         Debug.Log(reward);
-        if(reward && SpeakDistance > 2f){
+        if(reward && SpeakDistance > 4f){
             textLines = (RewardFile.text.Split('\n'));
             currentline = 0;
             endline = 3;
@@ -68,7 +68,7 @@ public class Textinputer : MonoBehaviour
             }         
         }
         // GameObject currentObject = EventSystem.current.currentSelectedGameObject;
-        if(SpeakDistance < 2f && currentline < endline && Input.GetMouseButtonDown(0) && !task) {
+        if(SpeakDistance < 4f && currentline < endline && Input.GetMouseButtonDown(0) && !task) {
             Textbox.SetActive(true);
             thetext.text = textLines[currentline];
             if(Input.GetMouseButtonDown(0))
